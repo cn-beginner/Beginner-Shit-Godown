@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!--css代码-->
+    <style>    
+		#time {
+            font-size:100px;
+            text-align:center;
+            margin-top:50px;
+        }
+		
+		button{
+			width: 120px;
+			height: 60px;
+		}
+
+       .button-container{
+            display:grid;
+            place-items:center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="time">00:00:00</div>
+    <div class="button-container">
+        <button onclick="startStop()">开始/停止</button>
+        <button onclick="cleanTime()">重置</button>
+    </div>
+	
+	<!--js代码-->
+    <script>
+        let second=0;
+        let min=0;
+        let hour=0;
+        let interval;
+
+        function startStop(){
+            if(!interval){
+                interval=setInterval(updownTime,1000);
+            }else{
+                clearInterval(interval);
+                interval=null;
+            }
+        }
+
+        function cleanTime() {
+            clearInterval(interval);
+            interval=null;
+            second=0;
+            min=0;
+            hour=0;
+            document.getElementById('time').innerHTML='00:00:00';
+        }
+
+        function updownTime(){
+            second++;
+            if(second===60){
+                second=0;
+                min++;
+            }
+            if(min===60){
+                min=0;
+                hour++;
+            }
+
+            // 处理秒
+			let secString;
+			if(second<10) {
+				secString=0+second;
+			}else{
+				secString=second;
+			}
+			
+			// 处理分钟
+			let minString;
+			if(min<10){
+				minString=0+min;
+			}else{
+				minString=min;
+			}
+			
+			// 处理小时
+			let hourString;
+			if(hour<10){
+				hourString=0+hour;
+			}else{
+				hourString=hour;
+			}
+			
+			document.getElementById('time').innerHTML=`${hourString}:${minString}:${secString}`;
+        }
+    </script>
+</body>
+
+</html>
